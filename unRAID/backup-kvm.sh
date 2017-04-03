@@ -25,7 +25,8 @@ echo $LC_VM_NAME
 virsh domfsfreeze $VM_NAME
 
 # Create snapshot
-qemu-img create -f qcow2 -b $VM_NAME.qcow2 $backupDir/$VM_NAME-`date +%Y%m%d`.qcow2
+#qemu-img create -f qcow2 -b $VM_NAME.qcow2 $backupDir/$VM_NAME-`date +%Y%m%d`.qcow2
+qemu-img convert -c -O qcow2 $vmDir/$LC_VM_NAME/vdisk1.qcow2 $backupDir/`date +%Y%m%d`/$1.qcow2
 
 # Thaw guest filesystems
 virsh domfsthaw $VM_NAME
