@@ -1,4 +1,13 @@
 #!/bin/bash
+# Still needs work, maybe, untested but in theory correct
+# Takes one of a few flags for input and what to do
+# -c = Check all the hashes and report EVERYTHING
+# -f = Check all the hashes and report ONLY FAILURES 
+# -r = Generate all the hashes (must be done before running with -c, or -f)
+# -v = VERBOSE (no idea if the output will be different for this, but may come in useful in the future)
+# -o = Output file to save all the hashes to, or use the hashes from
+
+
 verbose='false'
 cflag='false' # check all hashes and report
 rflag='false' # generate all hashes
@@ -31,14 +40,12 @@ then
   echo Report all and report failed enabled, defaulting to reporting on all checksums
 fi
 
-echo $mdfile
-
-exit 0
+echo Using hashes from or saving hashes to $mdfile
 
 # Run the intial file check generating all hashes
 if [ $rflag = true ]
 then
-    for dir in /mnt/*/
+    for dir in $searchDir
     do
         dir=${dir%*/}
         find $dir -type f -exec md5sum {} + > $mdfile
@@ -51,7 +58,6 @@ fi
 # Check all files and report to the terminal
 if [ $cflag = true ]
 then
-
     md5sum -c $mdfile
     exit 0
 fi
@@ -60,7 +66,7 @@ fi
 # Check all files and only repot FAILURES
 if [ $fflag = true ]
 then
-    md5sum -c ~/md5.txt | grep FAILED
+    md5sum -c $mdfile | grep FAILED
     exit 0
 fi
 
