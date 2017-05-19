@@ -17,19 +17,8 @@ fi
 for VM_NAME in $list
 do
 echo $VM_NAME
-# Freeze guest filesystems
-#virsh domfsfreeze $VM_NAME
 
-# Create snapshot
-#qemu-img create -f qcow2 -b $vmDir/$VM_NAME/vdisk1.qcow2 $backupDir/$VM_NAME-`date +%Y%m%d`.qcow2
-qemu-img create -f qcow2 -b $vmDir/$VM_NAME/vdisk1.qcow2 $vmDir/$VM_NAME/snapshot.qcow2
-
-# Thaw guest filesystems
-#virsh domfsthaw $VM_NAME
-
-# Take backup from snapshot
-qemu-img convert -O qcow2 $vmDir/$VM_NAME/snapshot.qcow2 $backupDir/`date +%Y%m%d`/$VM_NAME.qcow2
-
-qemu-img snapshot -d $vmDir/$VM_NAME/snapshot.qcow2
+  # Create snapshot
+  qemu-img convert -c -O qcow2 $vmDir/$VM_NAME/vdisk1.qcow2 $backupDir/`date +%Y%m%d`/$VM_NAME.qcow2
 
 done
