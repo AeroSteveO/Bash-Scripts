@@ -1,4 +1,9 @@
 #!/bin/bash
+# Backs up currently inactive KVM virtual machines (in qcow2 format at the moment)
+# Freezes the VM, copies and compresses the disk image to the backup location, and unfreezes the VM
+# Does not properly handle multiple disks for a single vm... yet
+
+
 list=$(virsh list --inactive --name)
 list=$(echo $list | awk '{print tolower($0)}')
 backupDir=/mnt/user/Backup/VM
