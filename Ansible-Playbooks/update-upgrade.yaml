@@ -1,5 +1,6 @@
 ---
-
+# Requires python 2.x on all hosts
+# Requires aptitude on debian/ubuntu hosts
 - hosts: all
   tasks:
 # This task updates servers that use 'yum' and RPM packages
@@ -42,7 +43,6 @@
 # by looking for Debian or Ubuntu as a distribution name.
     - name: apt-get update && apt-get upgrade
       apt:
-        #name: "*" 
         upgrade: yes
         update_cache: yes
         cache_valid_time: 86400
