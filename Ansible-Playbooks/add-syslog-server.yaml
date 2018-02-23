@@ -1,0 +1,16 @@
+---
+# Requires python 2.x on all hosts
+# Requires aptitude on debian/ubuntu hosts
+- hosts: all
+  tasks:
+
+
+
+    - name: add syslog host to properties
+      lineinfile: dest=/etc/rsyslog.conf regexp="^\*\.\*"  line="*.*@192.168.1.34:5140"
+      become: true
+      
+    - service:
+        name: rsyslog
+        state: restarted
+        become: true
