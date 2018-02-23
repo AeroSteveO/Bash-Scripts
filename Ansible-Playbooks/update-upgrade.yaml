@@ -41,7 +41,7 @@
 
 # This task updates servers that use 'apt' and DEB packages
 # by looking for Debian or Ubuntu as a distribution name.
-    - name: apt-get update && apt-get upgrade
+    - name: .deb do dist-upgrade
       apt:
         upgrade: dist
         update_cache: yes
@@ -51,13 +51,3 @@
         or
         ansible_distribution == 'Ubuntu'
       become: true
-    #- name: .deb do dist-upgrade
-    #  apt: >
-    #    update_cache=yes
-    #    cache_valid_time=1200
-    #    upgrade=dist
-    #  when: >
-    #    ansible_distribution == 'Debian'
-    #    or
-    #    ansible_distribution == 'Ubuntu'
-    #  become: true
