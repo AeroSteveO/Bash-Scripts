@@ -18,7 +18,7 @@ services:
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      -nfs:/znc-data
+      - nfs:/znc-data
     ports:
       - 6501:6501
     restart: unless-stopped
