@@ -25,8 +25,9 @@ services:
         volume:
           nocopy: true
     ports:
-      - target: 6697
-        published: 2565
-        protocol: tcp
-        mode: host
+      - "2565:6697"
+#      - target: 6697
+#        published: 2565
+#        protocol: tcp
+#        mode: host
     restart: unless-stopped
