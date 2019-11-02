@@ -1,12 +1,12 @@
 ---
-version: "3"
+version: "3.2"
 
 volumes:
   nfs:
     driver: local
     driver_opts:
       type: nfs
-      o: addr=192.168.1.211,rw
+      o: addr=192.168.1.211,nolock,soft,rw
       device: ":/mnt/user/Settings/ZNC"
 
 services:
@@ -14,11 +14,19 @@ services:
     image: znc
     container_name: znc
     environment:
-      - PUID=99
-      - PGID=100
+      - PUID=1000
+      - PGID=1000
       - TZ=Europe/London
+      - user=nobody
     volumes:
-      - nfs:/znc-data
+      - type: volume
+        source: nfs
+        target: /znc-data
+        volume:
+          nocopy: true
     ports:
-      - 6697:2565
+      - target: 6697
+        published: 2565
+        protocol: tcp
+        mode: host
     restart: unless-stopped
