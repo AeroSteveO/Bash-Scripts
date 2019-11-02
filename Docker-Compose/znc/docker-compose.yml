@@ -7,7 +7,7 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=192.168.1.211,rw
-      device: ":/Settings/ZNC"
+      device: ":/mnt/user/Settings/ZNC"
 
 services:
   znc:
@@ -20,5 +20,6 @@ services:
     volumes:
       - nfs:/znc-data
     ports:
-      - 6501:6501
+      - 6697:2565
+      - 
     restart: unless-stopped
