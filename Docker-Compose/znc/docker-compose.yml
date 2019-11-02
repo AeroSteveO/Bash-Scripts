@@ -11,7 +11,7 @@ volumes:
 
 services:
   znc:
-    image: linuxserver/znc
+    image: znc
     container_name: znc
     environment:
       - PUID=1000
