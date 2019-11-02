@@ -14,8 +14,8 @@ services:
     image: znc
     container_name: znc
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=99
+      - PGID=100
       - TZ=Europe/London
     volumes:
       - nfs:/znc-data
