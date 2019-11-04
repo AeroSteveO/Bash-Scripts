@@ -14,6 +14,12 @@ volumes:
       type: nfs
       o: addr=192.168.1.211,nolock,soft,rw
       device: ":/mnt/user/Settings/Anope"
+  anope_nfs_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.211,nolock,soft,rw
+      device: ":/mnt/user/Settings/Anope/data"
 
 services:
   inspircd:
@@ -35,7 +41,7 @@ services:
     image: 127.0.0.1:5000/anope
     volumes:
       - anope_nfs:/anope/conf
-      - anope_nfs/data:/data
+      - anope_nfs_data:/data
     links:
       - inspircd
     depends_on:
