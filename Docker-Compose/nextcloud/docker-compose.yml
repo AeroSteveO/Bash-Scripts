@@ -1,0 +1,61 @@
+version: '2'
+
+volumes:
+  nextcloud:
+  db:
+
+services:
+#  db:
+#    image: mariadb
+#    restart: always
+#    volumes:
+#      - db:/var/lib/mysql
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=uI09gX4nUo7k
+#      - MYSQL_PASSWORD=Nl4VHFu08gkz
+#      - MYSQL_DATABASE=nextcloud
+#      - MYSQL_USER=nextcloud
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=uI09gX4nUo7k
+      - POSTGRES_DB=defaultDb
+      - POSTGRES_USER=nextcloud
+
+  app:
+    image: nextcloud:fpm
+    links:
+      - db
+    volumes:
+      - nextcloud:/var/www/html
+    restart: always
+    environment:
+      - POSTGRES_DB=nextcloud_db
+      - POSTGRES_USER=nextcloud
+      - POSTGRES_PASSWORD=uI09gX4nUo7k
+      - POSTGRES_HOST=db:5432
+      - NEXTCLOUD_ADMIN_USER=administrator
+      - NEXTCLOUD_ADMIN_PASSWORD=nextcloudadministrator
+
+  web:
+    image: nginx
+    ports:
+      - 8080:80
+    links:
+      - app
+      - php
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    volumes_from:
+      - app
+    restart: always
+
+  php:
+    image: php:7-fpm
+    volumes:
+      - nextcloud:/var/www/html
+    restart: always
+
