@@ -20,6 +20,8 @@ services:
     image: 127.0.0.1:5000/inspircd
     volumes:
       - ircd_nfs:/inspircd/conf/
+#    links:
+#      - anope
     ports:
       - "6667:6667"
       - "6697:6697"
@@ -33,6 +35,7 @@ services:
     image: 127.0.0.1:5000/anope
     volumes:
       - anope_nfs:/anope/conf
+      - anope_nfs/data:/data
     links:
       - inspircd
     depends_on:
