@@ -1,0 +1,63 @@
+---
+version: "3.2"
+
+volumes:
+  ircd_nfs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.211,nolock,soft,rw
+      device: ":/mnt/user/Settings/Inspircd"
+  anope_nfs:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=192.168.1.211,nolock,soft,rw
+      device: ":/mnt/user/Settings/Anope"
+
+services:
+  inspircd:
+    image: 127.0.0.1:5000/inspircd
+    volumes:
+      - ircd_nfs:/inspircd/conf/
+    ports:
+      - "6667:6667"
+      - "6697:6697"
+#    environment:
+#      - INSP_NET_NAME=dtella_test
+#      - POSTGRES_DB=defaultDb
+#      - POSTGRES_USER=nextcloud
+    restart: always
+
+  anope:
+    image: 127.0.0.1:5000/anope
+    volumes:
+      - anope_nfs:/anope/conf
+    links:
+      - inspircd
+    depends_on:
+      - "inspircd"
+#    environment:
+#      - ANOPE_UPLINK_IP=inspircd
+#      - ANOPE_UPLINK_PASSWORD=password
+    restart: always
+
+  webchat:
+    image: 127.0.0.1:5000/qwebirc
+    ports:
+      - "9090:9090"
+    links:
+      - inspircd
+    depends_on:
+      - "inspircd"
+    restart: always
+#  db:
+#    image: mariadb
+#    restart: always
+#    volumes:
+#      - db:/var/lib/mysql
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=uI09gX4nUo7k
+#      - MYSQL_PASSWORD=Nl4VHFu08gkz
+#      - MYSQL_DATABASE=nextcloud
+#      - MYSQL_USER=nextcloud
