@@ -1,0 +1,26 @@
+#sudo docker service create \
+#        --name viz \
+#        --publish 8080:8080/tcp \
+#        --constraint node.role==manager \
+#        --mount type=bind,src=/var/run/docker.sock,dst=/var/run/docker.sock \
+#        alexellis2/visualizer-arm:latest
+
+
+
+services:
+  swarm-viz:
+    image: alexellis2/visualizer-arm:latest
+    container_name: swarm-viz
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        volume:
+          nocopy: true
+    ports:
+      - "8080:8080/tcp"
+    restart: unless-stopped
+    deploy:
+      placement:
+        constraints: 
+          - node.role == manager
