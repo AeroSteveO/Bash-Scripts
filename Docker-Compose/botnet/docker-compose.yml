@@ -17,12 +17,12 @@ services:
       - /mnt/data/triviabot:/config
 
   shepherd:
-    build: .
+#    build: .
     image: mazzolino/shepherd
     environment:
       TZ: 'US/Eastern'
       SLEEP_TIME: '5m'
-      FILTER_SERVICES: ''
+      FILTER_SERVICES: 'name=botnet_'
       VERBOSE: 'true'
       BLACKLIST_SERVICES: 'znc znc_znc'
     volumes:
