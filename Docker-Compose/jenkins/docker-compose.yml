@@ -2,10 +2,10 @@
 version: "3.2"
 
 services:
-  agent:
-    image: 127.0.0.1:5000/jenkins:lts
+  jenkins:
+    image: 127.0.0.1:5000/jenkins
     ports:
-      - "8080:8070"
+      - "8070:8080"
       - "50000:50000"
     volumes:
       - /mnt/data/jenkins:/var/jenkins_home
