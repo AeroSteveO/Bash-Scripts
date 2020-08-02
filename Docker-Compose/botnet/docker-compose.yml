@@ -14,7 +14,7 @@ services:
     environment:
       BOT_CONFIG_FOLDER: /config/
     volumes:
-      - /mnt/data/wheatley:/config
+      - /mnt/data/triviabot:/config
 
   shepherd:
     build: .
