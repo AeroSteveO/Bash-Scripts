@@ -1,0 +1,33 @@
+---
+version: "3.2"
+
+services:
+  wheatley:
+    image: 127.0.0.1:5000/wheatley
+    environment:
+      BOT_CONFIG_FOLDER: /config/
+    volumes:
+      - /mnt/data/wheatley:/config
+
+  triviabot:
+    image: 127.0.0.1:5000/triviabot
+    environment:
+      BOT_CONFIG_FOLDER: /config/
+    volumes:
+      - /mnt/data/wheatley:/config
+
+  shepherd:
+    build: .
+    image: mazzolino/shepherd
+    environment:
+      TZ: 'US/Eastern'
+      SLEEP_TIME: '5m'
+      FILTER_SERVICES: ''
+      VERBOSE: 'true'
+      BLACKLIST_SERVICES: 'znc znc_znc'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      placement:
+        constraints:
+        - node.role == manager
