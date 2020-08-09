@@ -6,7 +6,7 @@ services:
   registry:
     image: registry:2
     volumes:
-      - /mnt/registry:/var/lib/registry
+      - /mnt/data/registry:/var/lib/registry
     ports:
       - "5000:5000"
     restart: always
