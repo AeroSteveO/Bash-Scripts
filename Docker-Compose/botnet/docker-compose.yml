@@ -3,21 +3,20 @@ version: "3.2"
 
 services:
   wheatley:
-    image: 127.0.0.1:5000/wheatley
+    image: 127.0.0.1:5000/wheatley:latest
     environment:
       BOT_CONFIG_FOLDER: /config/
     volumes:
       - /mnt/data/wheatley:/config
 
   triviabot:
-    image: 127.0.0.1:5000/triviabot
+    image: 127.0.0.1:5000/triviabot:latest
     environment:
       BOT_CONFIG_FOLDER: /config/
     volumes:
       - /mnt/data/triviabot:/config
 
   shepherd:
-#    build: .
     image: mazzolino/shepherd
     environment:
       TZ: 'US/Eastern'
