@@ -10,13 +10,20 @@ version: "3.2"
 
 services:
   swarm-viz:
-    image: alexellis2/visualizer-arm:latest
+    image: dockersamples/visualizer:latest
     container_name: swarm-viz
     volumes:
-      volume:
-        - type: bind
-        - source: /var/run/docker.sock
-        - target: /var/run/docker.sock
+      #volume:
+      - /var/run/docker.sock:/var/run/docker.sock
+#        - source: /var/run/docker.sock
+#        - target: /var/run/docker.sock
+#        volume:
+#          nocopy: true
+#    volumes:
+#      volume:
+#        - type: bind
+#        - source: /var/run/docker.sock
+#        - target: /var/run/docker.sock
 #        volume:
 #          nocopy: true
     ports:
