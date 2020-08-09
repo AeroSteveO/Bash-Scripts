@@ -1,13 +1,13 @@
 ---
 version: "3.2"
 
-volumes:
-  nfs:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=192.168.1.211,nolock,soft,rw
-      device: ":/mnt/user/Settings/ZNC"
+#volumes:
+#  nfs:
+#    driver: local
+#    driver_opts:
+#      type: nfs
+#      o: addr=192.168.1.211,nolock,soft,rw
+#      device: ":/mnt/user/Settings/ZNC"
 
 services:
   znc:
@@ -19,11 +19,7 @@ services:
       - TZ=Europe/London
       - user=nobody
     volumes:
-      - type: volume
-        source: nfs
-        target: /znc-data
-        volume:
-          nocopy: true
+      - /mnt/data/ZNC:/znc-data
     ports:
       - "2565:6697"
 #      - target: 6697
