@@ -9,7 +9,26 @@ services:
       - /mnt/data/registry:/var/lib/registry
     ports:
       - "5000:5000"
+#    networks:
+#      - registry-ui-net
     restart: always
+
+# https://github.com/Joxit/docker-registry-ui
+  ui:
+    image: joxit/docker-registry-ui:static
+    ports:
+      - 8090:80
+    environment:
+      - REGISTRY_TITLE=Rapter Registry
+      - REGISTRY_URL=http://registry:5000
+    depends_on:
+      - registry
+#    networks:
+#      - registry-ui-net
+
+#networks:
+#  registry-ui-net:
+
 
 #$ docker run -d \
 #  -p 5000:5000 \
