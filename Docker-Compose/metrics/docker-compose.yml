@@ -1,0 +1,17 @@
+---
+version: "3.7"
+
+# Services to collect data for grafana via
+# prometheus or influxdb
+
+services:
+    unifi-poller:
+        image: golift/unifi-poller
+        volumes:
+            - "/mnt/data/unifi-poller/up.conf:/config/unifi-poller.conf"
+
+    sb6183-exporter:
+        image: sbrudenell/sb6183_exporter
+        ports: 
+            - "9195:9195"
+    
